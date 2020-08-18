@@ -1,0 +1,5 @@
+{"level":"fatal","error":"Get \"\": unsupported protocol scheme \"\"","time":"2020-08-18 22:29:05 Tuesday","caller":"f:/workspace/golang/crawler-summary/ins/pkg/internal.go:45","message":"获取页面内容失败"}
+{"level":"fatal","error":"Get \"\": unsupported protocol scheme \"\"","time":"2020-08-18 22:30:20 Tuesday","caller":"f:/workspace/golang/crawler-summary/ins/pkg/internal.go:45","message":"获取页面内容失败"}
+{"level":"fatal","error":"Get \"\": unsupported protocol scheme \"\"","time":"2020-08-18 22:33:52 Tuesday","caller":"f:/workspace/golang/crawler-summary/ins/pkg/internal.go:45","message":"获取页面内容失败"}
+{"level":"fatal","error":"Get \"\": unsupported protocol scheme \"\"","time":"2020-08-18 22:36:06 Tuesday","caller":"f:/workspace/golang/crawler-summary/ins/pkg/internal.go:45","message":"获取页面内容失败"}
+{"level":"fatal","error":"Get \"\": unsupported protocol scheme \"\"","time":"2020-08-18 22:38:18 Tuesday","caller":"f:/workspace/golang/crawler-summary/ins/pkg/internal.go:46","message":"获取页面内容失败"}

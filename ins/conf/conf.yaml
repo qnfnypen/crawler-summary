@@ -1,8 +1,5 @@
-# 主页链接
-URL: https://www.instagram.com/angelaqiqi_99/
-# 查询hash，ins会定时更新
-QUERY_HASH: bfa387b2992c3a52dcbe447467b4b771
-# 代理地址
-URL_PROXY: http://127.0.0.1:10809
-# Cookie
-Cookie: 
+HTTP:
+    URL: https://www.instagram.com/angelaqiqi_99/
+    QUERY_HASH: bfa387b2992c3a52dcbe447467b4b771
+    URL_PROXY: http://127.0.0.1:10809
+    Cookie: ig_did=DF06F5C2-A3E0-44A3-8295-0E06DD0A1BA1; mid=XzjyTQALAAHQGc505-s2aKX6i1ir; csrftoken=CjJoa43coRm6c1KrJPCgTP4D4J9tLYFQ; ds_user_id=38041720444; sessionid=38041720444%3AId8Wtkbej1udL3%3A2; rur=ASH; urlgen="{\"80.251.221.232\": 25820}:1k7Gm3:7nUVNE8ar0vKPH26WRy1F-Hr62M"
