@@ -53,14 +53,10 @@ func initConf() {
 	viper.AddConfigPath(".")
 	viper.AddConfigPath("conf/")
 
-	// 检测配置文件是否存在
-	if _, err := os.Stat("conf/conf.yaml"); err != nil {
-		if _, err := os.Stat("conf.yaml"); err != nil {
-			log.Fatal().Str("error", "在conf和当前目录下未找到配置文件conf.yaml").Msg("配置文件加载失败")
-		}
+	err := viper.ReadInConfig()
+	if err != nil {
+		log.Fatal().Str("error",err.Error()).Msg("读取配置文件失败")
 	}
-
-	viper.ReadInConfig()
 	viper.WatchConfig()
 }
 

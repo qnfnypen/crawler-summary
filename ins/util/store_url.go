@@ -1,6 +1,7 @@
 package util
 
 import (
+	"bufio"
 	"fmt"
 	"os"
 	"regexp"
@@ -12,7 +13,7 @@ import (
 
 // getUserName 获取用户名，用户创建文件夹
 func getUserName() string {
-	url := viper.GetString("URL")
+	url := viper.GetString("HTTP.URL")
 	regex := `://(.*)`
 	rp := regexp.MustCompile(regex)
 	ss := rp.FindStringSubmatch(url)
@@ -25,6 +26,7 @@ func getUserName() string {
 func WriteImgToFile(url string) {
 	// 获取用户名创建文件夹
 	name := getUserName()
+	fmt.Println(name)
 	fileDir := fmt.Sprintf("doc/%s", name)
 	if _, err := os.Stat(fileDir); err != nil {
 		err := os.MkdirAll(fileDir, os.ModePerm)
@@ -33,10 +35,11 @@ func WriteImgToFile(url string) {
 		}
 	}
 	filePath := fmt.Sprintf("%s/img.txt", fileDir)
-	f, err := os.OpenFile(filePath, os.O_CREATE|os.O_RDONLY, os.ModePerm)
+	f, err := os.OpenFile(filePath, os.O_CREATE|os.O_RDONLY|os.O_APPEND, os.ModePerm)
 	if err != nil {
-		log.Fatal().Str("error", err.Error()).Msg("创建存储文件失败")
+		log.Fatal().Str("error", err.Error()).Msg("打开存储文件失败")
 	}
+	defer f.Close()
 
 	f.WriteString(url + "\n")
 }
@@ -53,10 +56,13 @@ func WriteVideoToFile(url string) {
 		}
 	}
 	filePath := fmt.Sprintf("%s/video.txt", fileDir)
-	f, err := os.OpenFile(filePath, os.O_CREATE|os.O_RDONLY, os.ModePerm)
+	f, err := os.OpenFile(filePath, os.O_CREATE|os.O_RDONLY|os.O_APPEND, os.ModePerm)
 	if err != nil {
-		log.Fatal().Str("error", err.Error()).Msg("创建存储文件失败")
+		log.Fatal().Str("error", err.Error()).Msg("打开存储文件失败")
 	}
+	defer f.Close()
 
-	f.WriteString(url + "\n")
+	bw := bufio.NewWriter(f)
+	bw.WriteString(url + "\n")
+	bw.Flush()
 }

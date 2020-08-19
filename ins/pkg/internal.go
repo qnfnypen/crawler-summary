@@ -15,10 +15,10 @@ import (
 	_ "github.com/qnfnypen/crawler-summary/ins/public"
 )
 
-// GetURLContent 获取页面内容
-func GetURLContent(urlStr string) string {
+// getURLContent 获取页面内容
+func getURLContent(urlStr string) string {
 	// 解析代理地址
-	proxyAddr := viper.GetString("URL_PROXY")
+	proxyAddr := viper.GetString("HTTP.Proxy")
 	proxy, err := url.Parse(proxyAddr)
 	if err != nil {
 		log.Fatal().Str("error", err.Error()).Msg("解析代理地址失败")
@@ -34,13 +34,12 @@ func GetURLContent(urlStr string) string {
 		Transport: transport,
 		Timeout:   5 * time.Second,
 	}
-	fmt.Println(urlStr)
 	req, err := http.NewRequest(http.MethodGet, urlStr, nil)
 	if err != nil {
 		log.Fatal().Str("error", err.Error()).Msg("创建请求连接失败")
 	}
 	req.Header.Add("user-agent", `Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/81.0.4044.92 Safari/537.36`)
-	req.Header.Set("cookie", viper.GetString("Cookie"))
+	req.Header.Set("cookie", viper.GetString("HTTP.Cookie"))
 	resp, err := client.Do(req)
 	if err != nil  {
 		log.Fatal().Str("error", err.Error()).Msg("获取页面内容失败")
@@ -59,14 +58,14 @@ func GetURLContent(urlStr string) string {
 }
 
 // getUserID 获取用户参数，进行内容拼接
-// func getUserID() string {
-// 	resp := getURLContent(viper.GetString("URL"))
-// 	regex := `{"id":"(.*?)","username":`
-// 	rp := regexp.MustCompile(regex)
-// 	ss := rp.FindStringSubmatch(resp)
+func getUserID() string {
+	resp := getURLContent(viper.GetString("HTTP.URL"))
+	regex := `{"id":"(.*?)","username":`
+	rp := regexp.MustCompile(regex)
+	ss := rp.FindStringSubmatch(resp)
 
-// 	return ss[1]
-// }
+	return ss[1]
+}
 
 // getAfter 获取下一页的文档游标
 func getAfter(content string) string {
@@ -82,9 +81,9 @@ func getAfter(content string) string {
 func joinURL(id, after string) string {
 	if after == "" {
 		return fmt.Sprintf(`https://www.instagram.com/graphql/query/?query_hash=%s&variables={"id":"%s","first":12}`,
-			viper.GetString("QUERY_HASH"), id)
+			viper.GetString("HTTP.QueryHash"), id)
 	}
 
 	return fmt.Sprintf(`https://www.instagram.com/graphql/query/?query_hash=%s&variables={"id":"%s","first":12,"after":"%s"}`,
-		viper.GetString("QUERY_HASH"), id, after)
+		viper.GetString("HTTP.QueryHash"), id, after)
 }
